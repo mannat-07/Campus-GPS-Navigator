@@ -1,32 +1,52 @@
+// App.js
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Text } from 'react-native';
+import HomeScreen from './screens/HomeScreen';
+import MapScreen from './screens/MapScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🏫 Campus GPS</Text>
-      <Text style={styles.subtitle}>Hello World! App is working! 🎉</Text>
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#1e3a8a',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerShadowVisible: false,
+          }}
+        >
+          <Stack.Screen 
+            name="Home" 
+            component={HomeScreen} 
+            options={{ 
+              title: 'Campus GPS',
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen 
+            name="Map" 
+            component={MapScreen} 
+            options={{ 
+              title: 'Campus Map',
+              headerBackTitle: 'Home',
+              headerRight: () => (
+                <Text style={{ color: 'white', marginRight: 15 }}>📍</Text>
+              ),
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f8ff',
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#2196F3',
-    marginBottom: 20,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
-    textAlign: 'center',
-  },
-});
